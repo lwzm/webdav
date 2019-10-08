@@ -1,0 +1,6 @@
+http://* {
+    #browse
+    webdav
+    gzip
+    log / stderr "{when_iso}	{remote}	{method}	{uri}	{proto}	{status}	{size}	{latency}	{>Content-Length}	{>User-Agent}"
+}
