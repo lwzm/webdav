@@ -5,11 +5,10 @@ RUN wget -O _ "https://caddyserver.com/download/linux/amd64?plugins=http.webdav&
 
 FROM busybox
 
-COPY --from=base caddy /bin
-COPY Caddyfile /etc
+COPY --from=base caddy /bin/
+COPY Caddyfile ./
 
 VOLUME /data
-WORKDIR /data
 
 EXPOSE 80
-CMD [ "caddy", "--conf", "/etc/Caddyfile" ]
+CMD [ "caddy" ]
