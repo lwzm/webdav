@@ -1,7 +1,8 @@
-FROM busybox as base
+FROM alpine as base
 
-RUN wget "https://caddyserver.com/download/linux/amd64?plugins=http.webdav&license=personal&telemetry=off" -O - | \
-    tar xz
+RUN apk add ca-certificates \
+    && wget "https://caddyserver.com/download/linux/amd64?plugins=http.webdav&license=personal&telemetry=off" -O - \
+    | tar xz
 
 FROM busybox
 
