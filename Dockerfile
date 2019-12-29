@@ -1,7 +1,7 @@
-FROM alpine as base
+FROM busybox as base
 
-RUN wget -O _ "https://caddyserver.com/download/linux/amd64?plugins=http.webdav&license=personal&telemetry=off" \
-    && tar xf _
+RUN wget "https://caddyserver.com/download/linux/amd64?plugins=http.webdav&license=personal&telemetry=off" -O - | \
+    tar xz
 
 FROM busybox
 
