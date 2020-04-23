@@ -1,15 +1,14 @@
-FROM alpine as base
+FROM golang as base
 
-RUN apk add curl \
-    && curl "https://caddyserver.com/download/linux/amd64?plugins=http.webdav&license=personal&telemetry=off" \
-    | tar xz
+LABEL maintainer="lwzm@qq.com"
 
-FROM busybox
+RUN CGO_ENABLED=0 go get -v -ldflags "-s -w" github.com/hacdias/webdav
 
-COPY --from=base caddy /bin/
-COPY Caddyfile ./
+FROM scratch
 
+COPY --from=base /go/bin/webdav /webdav
 VOLUME /data/
-
+ENV WD_PORT=80 WD_AUTH=false WD_MODIFY=true WD_SCOPE=/data
 EXPOSE 80
-CMD [ "caddy" ]
+      
+ENTRYPOINT [ "/webdav" ]
