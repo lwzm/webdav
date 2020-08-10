@@ -8,7 +8,7 @@ FROM scratch
 
 ENV WD_AUTH=false WD_MODIFY=true WD_PORT=80 WD_SCOPE=/data
 EXPOSE 80
-VOLUME /data/
+VOLUME /data
 ENTRYPOINT [ "/webdav" ]
 
 COPY --from=base /go/bin/webdav /webdav
