@@ -1,14 +1,13 @@
-FROM golang as base
+FROM busybox as base
 
-LABEL maintainer="lwzm@qq.com"
-
-RUN CGO_ENABLED=0 go get -v -ldflags "-s -w" github.com/hacdias/webdav
+RUN wget https://github.com/hacdias/webdav/releases/download/v4.2.0/linux-amd64-webdav.tar.gz -O - | tar xz
 
 FROM busybox
+LABEL maintainer="lwzm@qq.com"
 
 ENV WD_AUTH=false WD_MODIFY=true WD_PORT=80 WD_SCOPE=/data
 EXPOSE 80
 VOLUME /data
 CMD [ "webdav" ]
 
-COPY --from=base /go/bin/webdav /bin/
+COPY --from=base /webdav /bin/
